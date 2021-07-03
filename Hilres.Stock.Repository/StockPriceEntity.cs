@@ -31,6 +31,11 @@ namespace Hilres.Stock.Repository
         public double High { get; set; }
 
         /// <summary>
+        /// Gets or sets the close price.
+        /// </summary>
+        public double Close { get; set; }
+
+        /// <summary>
         /// Gets or sets the adjusted open price.
         /// </summary>
         public double AdjOpen { get; set; }

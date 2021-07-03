@@ -13,7 +13,6 @@
 - [StyleCop.Analyzers](https://www.nuget.org/packages/StyleCop.Analyzers)
 - <s>[Microsoft.CodeAnalysis.NetAnalyzers](https://www.nuget.org/packages/Microsoft.CodeAnalysis.NetAnalyzers)</s>
   - Right click Project file > Properties > Code Analysis > "Enable .NET Analyzers" = checked.  (default is checked for C# 9.0)
-- Hmm, maybe [xunit.analyzers](https://www.nuget.org/packages/xunit.analyzers)
 
 ### Unit testing
 
