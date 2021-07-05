@@ -1,7 +1,7 @@
 ﻿// <copyright file="ISymbolListService.cs" company="None">
 // Free and open source code.
 // </copyright>
-namespace Hilres.Stock.Updater.Abstraction.SymbolList
+namespace Hilres.Stock.Download.Abstraction.SymbolList
 {
     using System.Threading;
     using System.Threading.Tasks;

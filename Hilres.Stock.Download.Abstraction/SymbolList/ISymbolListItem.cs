@@ -2,7 +2,7 @@
 // Free and open source code.
 // </copyright>
 
-namespace Hilres.Stock.Updater.Abstraction.SymbolList
+namespace Hilres.Stock.Download.Abstraction.SymbolList
 {
     /// <summary>
     /// Symbol list item interface.
