@@ -2,7 +2,7 @@
 // Free and open source code.
 // </copyright>
 
-namespace Hilres.Stock.Repository.Test
+namespace Hilres.Stock.Repository.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -66,8 +66,7 @@ namespace Hilres.Stock.Repository.Test
         /// <returns>StockRepositoryService.</returns>
         private static StockRepositoryService GetEmptyTestDatabase()
         {
-            using var db = new StockRepositoryService(":memory:");
-            return db;
+            return new StockRepositoryService(":memory:");
         }
 
         /// <summary>
@@ -76,7 +75,7 @@ namespace Hilres.Stock.Repository.Test
         /// <returns>StockRepositoryService.</returns>
         private static StockRepositoryService GetTestDatabaseWithData()
         {
-            using var db = GetEmptyTestDatabase();
+            var db = GetEmptyTestDatabase();
             db.AddStock(TestStocks);
             return db;
         }

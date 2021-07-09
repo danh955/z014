@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\debug\Hilres.Stock.Repository.Test.xml</DocumentationFile>
+    <DocumentationFile>bin\debug\Hilres.Stock.Repository.Tests.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

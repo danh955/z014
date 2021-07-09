@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Repository", "Hilres.Stock.Repository\Hilres.Stock.Repository.csproj", "{C32A80B1-284D-4424-8A57-51EA3FAE1D75}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Repository.Test", "Hilres.Stock.Repository.Test\Hilres.Stock.Repository.Test.csproj", "{452AEBBA-D309-4885-B56E-68870BF6E720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Repository.Tests", "Hilres.Stock.Repository.Tests\Hilres.Stock.Repository.Tests.csproj", "{452AEBBA-D309-4885-B56E-68870BF6E720}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Download.Abstraction", "Hilres.Stock.Download.Abstraction\Hilres.Stock.Download.Abstraction.csproj", "{B21EA375-CCB7-4B1A-B24C-148A9190CBD2}"
 EndProject
