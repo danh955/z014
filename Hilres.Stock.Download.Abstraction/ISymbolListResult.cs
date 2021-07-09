@@ -1,7 +1,8 @@
-﻿// <copyright file="ISymbolListResult.cs" company="None">
+﻿// <copyright file="IDownloadSymbolListResult.cs" company="None">
 // Free and open source code.
 // </copyright>
-namespace Hilres.Stock.Download.Abstraction.SymbolList
+
+namespace Hilres.Stock.Download.Abstraction
 {
     using System;
     using System.Collections.Generic;

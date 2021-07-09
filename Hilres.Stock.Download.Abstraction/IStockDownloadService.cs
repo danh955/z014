@@ -1,15 +1,16 @@
-﻿// <copyright file="ISymbolListService.cs" company="None">
+﻿// <copyright file="IStockDownloadService.cs" company="None">
 // Free and open source code.
 // </copyright>
-namespace Hilres.Stock.Download.Abstraction.SymbolList
+
+namespace Hilres.Stock.Download.Abstraction
 {
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Symbol list service interface.
+    /// Stock download service interface.
     /// </summary>
-    public interface ISymbolListService
+    public interface IStockDownloadService
     {
         /// <summary>
         /// Get all the symbols.

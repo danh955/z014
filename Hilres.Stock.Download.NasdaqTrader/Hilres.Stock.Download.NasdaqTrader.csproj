@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\debug\Hilres.Stock.Download.Abstraction.xml</DocumentationFile>
+    <DocumentationFile>bin\debug\Hilres.Stock.Download.NasdaqTrader.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hilres.Stock.Download.Abstraction\Hilres.Stock.Download.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>

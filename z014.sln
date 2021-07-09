@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Repository", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Repository.Test", "Hilres.Stock.Repository.Test\Hilres.Stock.Repository.Test.csproj", "{452AEBBA-D309-4885-B56E-68870BF6E720}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hilres.Stock.Download.Abstraction", "Hilres.Stock.Download.Abstraction\Hilres.Stock.Download.Abstraction.csproj", "{B21EA375-CCB7-4B1A-B24C-148A9190CBD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hilres.Stock.Download.Abstraction", "Hilres.Stock.Download.Abstraction\Hilres.Stock.Download.Abstraction.csproj", "{B21EA375-CCB7-4B1A-B24C-148A9190CBD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hilres.Stock.Download.NasdaqTrader", "Hilres.Stock.Download.NasdaqTrader\Hilres.Stock.Download.NasdaqTrader.csproj", "{4FB123A1-0E77-4FDA-8CCF-32F6C328BF08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{B21EA375-CCB7-4B1A-B24C-148A9190CBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21EA375-CCB7-4B1A-B24C-148A9190CBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21EA375-CCB7-4B1A-B24C-148A9190CBD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB123A1-0E77-4FDA-8CCF-32F6C328BF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB123A1-0E77-4FDA-8CCF-32F6C328BF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB123A1-0E77-4FDA-8CCF-32F6C328BF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB123A1-0E77-4FDA-8CCF-32F6C328BF08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
