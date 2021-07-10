@@ -17,6 +17,6 @@ namespace Hilres.Stock.Download.Abstraction
         /// </summary>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>NasdaqSymbolsResult.</returns>
-        public Task<ISymbolListResult> GetSymbleList(CancellationToken cancellationToken);
+        public Task<ISymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken);
     }
 }

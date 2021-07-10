@@ -43,7 +43,7 @@ namespace Hilres.Stock.Download.NasdaqTrader
         /// </summary>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>NasdaqSymbolsResult.</returns>
-        public async Task<ISymbolListResult> GetSymbleList(CancellationToken cancellationToken)
+        public async Task<ISymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken)
         {
             var csvConfigurationPipe = new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = "|" };
 
