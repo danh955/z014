@@ -1,4 +1,4 @@
-﻿// <copyright file="IDownloadSymbolListItem.cs" company="None">
+﻿// <copyright file="ISymbolListItem.cs" company="None">
 // Free and open source code.
 // </copyright>
 
