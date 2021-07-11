@@ -38,6 +38,12 @@ namespace Hilres.Stock.Download.NasdaqTrader
             this.clientFactory = clientFactory;
         }
 
+        /// <inheritdoc/>
+        public Task<PriceListResult> GetStockPricesAsync(string symbol, DateTime firstDate, DateTime lastDate, StockInterval interval, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Get all the symbols.
         /// </summary>
