@@ -14,7 +14,7 @@ namespace Hilres.Stock.Download.YahooFinance
     public partial class DownloadYahooFinanceService
     {
         /// <inheritdoc/>
-        public Task<ISymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken)
+        public Task<SymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();
         }

@@ -49,7 +49,7 @@ namespace Hilres.Stock.Download.NasdaqTrader
         /// </summary>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>NasdaqSymbolsResult.</returns>
-        public async Task<ISymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken)
+        public async Task<SymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken)
         {
             var csvConfigurationPipe = new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = "|" };
 
@@ -66,9 +66,9 @@ namespace Hilres.Stock.Download.NasdaqTrader
                        }
 
                        return new(
-                           symbol: csv[0].Trim(),
-                           securityName: csv[1].Trim(),
-                           exchange: "NASDAQ");
+                           Symbol: csv[0].Trim(),
+                           SecurityName: csv[1].Trim(),
+                           Exchange: "NASDAQ");
                    });
 
             var otherSymbolTask = this.GetItemsAsync(
@@ -90,9 +90,9 @@ namespace Hilres.Stock.Download.NasdaqTrader
                    }
 
                    return new(
-                       symbol: csv[7].Trim(),
-                       securityName: csv[1].Trim(),
-                       exchange: exchange switch
+                       Symbol: csv[7].Trim(),
+                       SecurityName: csv[1].Trim(),
+                       Exchange: exchange switch
                        {
                            "A" => "NYSE MKT",
                            "N" => "NYSE",  // New York Stock Exchange
@@ -106,8 +106,8 @@ namespace Hilres.Stock.Download.NasdaqTrader
             await Task.WhenAll(nasdaqSymbolTask, otherSymbolTask);
 
             return new SymbolListResult(
-                symbols: nasdaqSymbolTask.Result.Item1.Union(otherSymbolTask.Result.Item1),
-                fileCreationTime: Max(nasdaqSymbolTask.Result.Item2, otherSymbolTask.Result.Item2));
+                Symbols: nasdaqSymbolTask.Result.Item1.Union(otherSymbolTask.Result.Item1),
+                FileCreationTime: Max(nasdaqSymbolTask.Result.Item2, otherSymbolTask.Result.Item2));
         }
 
         private static DateTime Max(DateTime value1, DateTime value2)

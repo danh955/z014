@@ -18,7 +18,7 @@ namespace Hilres.Stock.Download.Abstraction
         /// </summary>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>NasdaqSymbolsResult.</returns>
-        public Task<ISymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken);
+        public Task<SymbolListResult> GetSymbolListAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Get stock history data from Yahoo.
