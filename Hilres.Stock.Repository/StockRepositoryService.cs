@@ -50,14 +50,9 @@ namespace Hilres.Stock.Repository
         /// <summary>
         /// Add a list of stock entities into the database.
         /// </summary>
-        /// <param name="stocks">StockEntity to add.</param>
-        public void AddStock(IEnumerable<StockEntity> stocks)
+        /// <param name="stocks">StockEntity list to add.</param>
+        public void AddStocks(IEnumerable<StockEntity> stocks)
         {
-            foreach (var stock in stocks)
-            {
-                stock.Symbol = stock.Symbol.Trim().ToUpper();
-            }
-
             this.stocks.Insert(stocks);
         }
 
@@ -87,6 +82,15 @@ namespace Hilres.Stock.Repository
                 this.db.Dispose();
                 GC.SuppressFinalize(this);
             }
+        }
+
+        /// <summary>
+        /// Get all the symbols in the database.
+        /// </summary>
+        /// <returns>List of symbols.</returns>
+        public IEnumerable<string> GetAllSymbols()
+        {
+            return this.stocks.Query().Select(s => s.Symbol).ToList();
         }
 
         /// <summary>

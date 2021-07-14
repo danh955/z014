@@ -4,7 +4,6 @@
 namespace Hilres.Stock.Repository
 {
     using System.Collections.Generic;
-    using LiteDB;
 
     /// <summary>
     /// Stock class.
@@ -21,13 +20,12 @@ namespace Hilres.Stock.Repository
         /// <summary>
         /// Initializes a new instance of the <see cref="StockEntity"/> class.
         /// </summary>
-        /// <param name="id">Object id.</param>
         /// <param name="symbol">Stock symbol.</param>
-        [BsonCtor]
-        public StockEntity(int id, string symbol)
+        /// <param name="stockPrices">List of stock prices.</param>
+        public StockEntity(string symbol, List<StockPriceEntity> stockPrices)
         {
-            this.Id = id;
             this.Symbol = symbol;
+            this.StockPrices = stockPrices;
         }
 
         /// <summary>

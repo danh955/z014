@@ -23,7 +23,7 @@ namespace Hilres.Stock.Download.NasdaqTrader.Tests
         public async Task GetSymbolListTestAsync()
         {
             var service = new DownloadNasdaqTraderService(MockData.MockIHttpClientFactoryForNasdaqSymbols());
-            var result = await service.GetSymbolListAsync(CancellationToken.None);
+            var result = await service.GetAllSymbolsAsync(CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.NotNull(result.Symbols);

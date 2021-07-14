@@ -76,7 +76,7 @@ namespace Hilres.Stock.Repository.Tests
         private static StockRepositoryService GetTestDatabaseWithData()
         {
             var db = GetEmptyTestDatabase();
-            db.AddStock(TestStocks);
+            db.AddStocks(TestStocks);
             return db;
         }
     }
