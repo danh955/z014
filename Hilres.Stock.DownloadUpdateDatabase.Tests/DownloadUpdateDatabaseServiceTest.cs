@@ -8,6 +8,8 @@ namespace Hilres.Stock.DownloadUpdateDatabase.Tests
     using System.Threading.Tasks;
     using Hilres.Stock.DownloadUpdateDatabase.Tests.Helper;
     using Hilres.Stock.Repository;
+    using Microsoft.Extensions.Logging;
+    using Moq;
     using Xunit;
 
     /// <summary>
@@ -22,7 +24,8 @@ namespace Hilres.Stock.DownloadUpdateDatabase.Tests
         [Fact]
         public async Task UpdataDbTest()
         {
-            var servcie = new DownloadUpdateDatabaseService(new MockStockDownloadService(), GetEmptyTestDatabase());
+            var loggerMoq = Mock.Of<ILogger<DownloadUpdateDatabaseService>>();
+            var servcie = new DownloadUpdateDatabaseService(loggerMoq, new MockStockDownloadService(), GetEmptyTestDatabase());
             await servcie.UpdataDb(CancellationToken.None);
         }
 

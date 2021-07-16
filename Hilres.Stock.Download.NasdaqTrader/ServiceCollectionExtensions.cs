@@ -12,11 +12,11 @@ namespace Hilres.Stock.Download.NasdaqTrader
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Add Stock data source from Yahoo financial to the service collection.
+        /// AAdd Hilres stock download NASDQ trader service to the service collection.
         /// </summary>
         /// <param name="service">IServiceCollection.</param>
         /// <returns>Updated IServiceCollection.</returns>
-        public static IServiceCollection AddHilresStockDataSourceYahoo(this IServiceCollection service)
+        public static IServiceCollection AddHilresStockDownloadNasdaqTraderService(this IServiceCollection service)
         {
             service.AddHttpClient();
             service.AddTransient<IStockDownloadService, DownloadNasdaqTraderService>();

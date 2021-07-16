@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hilres.Stock.Download.Abstraction\Hilres.Stock.Download.Abstraction.csproj" />
+    <ProjectReference Include="..\Hilres.Stock.Download.NasdaqTrader\Hilres.Stock.Download.NasdaqTrader.csproj" />
   </ItemGroup>
 
 </Project>

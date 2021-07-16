@@ -11,6 +11,7 @@ namespace Hilres.Stock.DownloadUpdateDatabase
     using System.Threading.Tasks;
     using Hilres.Stock.Download.Abstraction;
     using Hilres.Stock.Repository;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Download stock data and update database service class.
@@ -19,16 +20,19 @@ namespace Hilres.Stock.DownloadUpdateDatabase
     {
         private readonly StockRepositoryService db;
         private readonly IStockDownloadService downloadService;
+        private readonly ILogger<DownloadUpdateDatabaseService> logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadUpdateDatabaseService"/> class.
         /// </summary>
         /// <param name="downloadService">IStockDownloadService.</param>
         /// <param name="db">StockRepositoryService.</param>
-        public DownloadUpdateDatabaseService(IStockDownloadService downloadService, StockRepositoryService db)
+        /// <param name="logger">ILogger.</param>
+        public DownloadUpdateDatabaseService(ILogger<DownloadUpdateDatabaseService> logger, IStockDownloadService downloadService, StockRepositoryService db)
         {
             this.downloadService = downloadService;
             this.db = db;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -48,6 +52,8 @@ namespace Hilres.Stock.DownloadUpdateDatabase
 
             foreach (var symbol in dbSymbols)
             {
+                this.logger.LogInformation("Symbol: {0}", symbol);
+
                 var stockTask = this.downloadService.GetStockPricesAsync(symbol, DateTime.Today.AddYears(-1), DateTime.Today, StockInterval.Daily, cancellationToken);
                 var dbStock = this.db.GetStockBySymbol(symbol);
                 var downloadedStock = await stockTask;

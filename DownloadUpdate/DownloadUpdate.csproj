@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\debug\Hilres.Stock.DownloadUpdateDatabase.xml</DocumentationFile>
+    <DocumentationFile>bin\debug\DownloadUpdate.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,8 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hilres.Stock.Download.Abstraction\Hilres.Stock.Download.Abstraction.csproj" />
+    <ProjectReference Include="..\Hilres.Stock.Download.YahooFinance\Hilres.Stock.Download.YahooFinance.csproj" />
+    <ProjectReference Include="..\Hilres.Stock.DownloadUpdateDatabase\Hilres.Stock.DownloadUpdateDatabase.csproj" />
     <ProjectReference Include="..\Hilres.Stock.Repository\Hilres.Stock.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

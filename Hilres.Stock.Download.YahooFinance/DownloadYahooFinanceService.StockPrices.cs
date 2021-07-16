@@ -69,6 +69,7 @@ namespace Hilres.Stock.Download.YahooFinance
                 return new PriceListResult(null, e.Message);
             }
 
+            await Task.Delay(100);
             return new PriceListResult(items);
         }
     }

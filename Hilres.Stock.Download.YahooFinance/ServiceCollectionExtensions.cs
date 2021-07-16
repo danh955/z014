@@ -1,9 +1,9 @@
 ﻿// <copyright file="ServiceCollectionExtensions.cs" company="None">
 // Free and open source code.
 // </copyright>
-
-namespace Hilres.Stock.Repository
+namespace Hilres.Stock.Download.YahooFinance
 {
+    using Hilres.Stock.Download.Abstraction;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -12,14 +12,14 @@ namespace Hilres.Stock.Repository
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Add Hilres stock repository service to the service collection.
+        /// Add Hilres stock download Yahoo Finance service to the service collection.
         /// </summary>
         /// <param name="service">IServiceCollection.</param>
-        /// <param name="connectionString">LiteDB connection string.</param>
         /// <returns>Updated IServiceCollection.</returns>
-        public static IServiceCollection AddHilresStockRepositoryService(this IServiceCollection service, string connectionString)
+        public static IServiceCollection AddHilresStockDownloadYahooFinanceService(this IServiceCollection service)
         {
-            service.AddSingleton<StockRepositoryService>(new StockRepositoryService(connectionString));
+            service.AddHttpClient();
+            service.AddTransient<IStockDownloadService, DownloadYahooFinanceService>();
             return service;
         }
     }
