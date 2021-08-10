@@ -19,7 +19,7 @@ namespace Hilres.Stock.Download.YahooFinance
         public static IServiceCollection AddHilresStockDownloadYahooFinanceService(this IServiceCollection service)
         {
             service.AddHttpClient();
-            service.AddTransient<IStockDownloadService, DownloadYahooFinanceService>();
+            service.AddSingleton<IStockDownloadService, DownloadYahooFinanceService>();
             return service;
         }
     }

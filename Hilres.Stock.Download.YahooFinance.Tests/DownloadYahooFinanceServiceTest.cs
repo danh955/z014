@@ -10,6 +10,8 @@ namespace Hilres.Stock.Download.YahooFinance.Tests
     using System.Threading.Tasks;
     using Hilres.Stock.Download.Abstraction;
     using Hilres.Stock.Download.YahooFinance.Tests.Helper;
+    using Microsoft.Extensions.Logging;
+    using Moq;
     using Xunit;
 
     /// <summary>
@@ -32,7 +34,8 @@ namespace Hilres.Stock.Download.YahooFinance.Tests
         [InlineData("MSFT", "10/1/2021", "3/14/2021", StockInterval.Monthly, 7)]
         public async Task GetStockPricesAsyncTest(string symbol, string firstDate, string lastDate, StockInterval interval, int count)
         {
-            var service = new DownloadYahooFinanceService(YahooPriceHistoryHelper.MockIHttpClientFactory());
+            var moqLogger = Mock.Of<ILogger<DownloadYahooFinanceService>>();
+            var service = new DownloadYahooFinanceService(YahooPriceHistoryHelper.MockIHttpClientFactory(), moqLogger);
             var result = await service.GetStockPricesAsync(symbol, DateTime.Parse(firstDate), DateTime.Parse(lastDate), interval, CancellationToken.None);
 
             Assert.NotNull(result);

@@ -52,11 +52,14 @@ namespace Hilres.Stock.DownloadUpdateDatabase
 
             foreach (var symbol in dbSymbols)
             {
-                this.logger.LogInformation("Symbol: {0}", symbol);
-
+                this.logger.LogDebug("Calling GetStockPricesAsync");
                 var stockTask = this.downloadService.GetStockPricesAsync(symbol, DateTime.Today.AddYears(-1), DateTime.Today, StockInterval.Daily, cancellationToken);
+                this.logger.LogDebug("Calling GetStockBySymbol");
                 var dbStock = this.db.GetStockBySymbol(symbol);
+                this.logger.LogDebug("await stockTask");
+                //// TODO: it hanged here.
                 var downloadedStock = await stockTask;
+                this.logger.LogDebug("Processing");
 
                 if (downloadedStock != null && downloadedStock.Prices != null && downloadedStock.ErrorMessage == null)
                 {
@@ -75,12 +78,21 @@ namespace Hilres.Stock.DownloadUpdateDatabase
 
                     if (dbStock == null)
                     {
+                        this.logger.LogDebug("AddStock");
                         this.db.AddStock(new(symbol, newPrices));
                     }
                     else
                     {
-                        dbStock.StockPrices = newPrices;
-                        this.db.UpdateStock(dbStock);
+                        if ((!dbStock.StockPrices.Any() && newPrices.Any())
+                            || (dbStock.StockPrices.Any() && newPrices.Any()
+                                && dbStock.StockPrices.First().Volume != newPrices.First().Volume
+                                && dbStock.StockPrices.First().Close != newPrices.First().Close
+                                && dbStock.StockPrices.First().AdjClose != newPrices.First().AdjClose))
+                        {
+                            this.logger.LogDebug("UpdateStock");
+                            dbStock.StockPrices = newPrices;
+                            this.db.UpdateStock(dbStock);
+                        }
                     }
                 }
 
