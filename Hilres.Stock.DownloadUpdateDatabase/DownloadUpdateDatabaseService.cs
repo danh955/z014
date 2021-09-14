@@ -52,27 +52,26 @@ namespace Hilres.Stock.DownloadUpdateDatabase
 
             foreach (var symbol in dbSymbols)
             {
-                this.logger.LogDebug("Calling GetStockPricesAsync");
-                var stockTask = this.downloadService.GetStockPricesAsync(symbol, DateTime.Today.AddYears(-1), DateTime.Today, StockInterval.Daily, cancellationToken);
-                this.logger.LogDebug("Calling GetStockBySymbol");
+                this.logger.LogDebug("Processing symbol {0}", symbol);
+                var downloadedStock = await this.downloadService.GetStockPricesAsync(symbol, DateTime.Today.AddYears(-1), DateTime.Today, StockInterval.Daily, cancellationToken);
+                this.logger.LogDebug("Got {0:#,##0} records from download service.", downloadedStock.Prices.Count());
                 var dbStock = this.db.GetStockBySymbol(symbol);
-                this.logger.LogDebug("await stockTask");
-                //// TODO: it hanged here.
-                var downloadedStock = await stockTask;
-                this.logger.LogDebug("Processing");
+                this.logger.LogDebug("Got {0:#,##0} records from database.", dbStock.StockPrices.Count);
 
                 if (downloadedStock != null && downloadedStock.Prices != null && downloadedStock.ErrorMessage == null)
                 {
-                    var newPrices = downloadedStock.Prices.Select(s =>
+                    var newPrices = downloadedStock.Prices
+                        .Where(s => !(s.Open == null && s.Low == null && s.High == null && s.Close == null && s.AdjClose == null && s.Volume == null))
+                        .Select(s =>
                                 new StockPriceEntity()
                                 {
                                     Period = s.Date,
-                                    Open = s.Open,
-                                    Low = s.Low,
-                                    High = s.High,
-                                    Close = s.Close,
-                                    AdjClose = s.AdjClose,
-                                    Volume = s.Volume,
+                                    Open = s.Open ?? 0,
+                                    Low = s.Low ?? 0,
+                                    High = s.High ?? 0,
+                                    Close = s.Close ?? 0,
+                                    AdjClose = s.AdjClose ?? 0,
+                                    Volume = s.Volume ?? 0,
                                 })
                                 .ToList();
 

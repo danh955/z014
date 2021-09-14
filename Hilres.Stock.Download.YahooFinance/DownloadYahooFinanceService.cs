@@ -4,6 +4,7 @@
 
 namespace Hilres.Stock.Download.YahooFinance
 {
+    using System;
     using System.Net.Http;
     using Hilres.Stock.Download.Abstraction;
     using Microsoft.Extensions.Logging;
@@ -29,6 +30,8 @@ namespace Hilres.Stock.Download.YahooFinance
             this.httpClient = httpClientFactory.CreateClient();
             this.logger = logger;
             this.token = new Token(logger);
+
+            this.httpClient.Timeout = TimeSpan.FromSeconds(100);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Hilres.Stock.Download.YahooFinance
     using System;
     using System.IO;
     using System.Net;
+    using System.Net.Http;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
@@ -46,15 +47,24 @@ namespace Hilres.Stock.Download.YahooFinance
         /// Refresh cookie and crumb value.
         /// </summary>
         /// <param name="symbol">Stock ticker symbol.</param>
+        /// <param name="httpClient">HttpClient.</param>
         /// <param name="cancellationToken">CancellationToken.</param>
         /// <returns>True if successful.</returns>
-        public async Task RefreshAsync(string symbol, CancellationToken cancellationToken)
+        public async Task RefreshAsync(string symbol, HttpClient httpClient, CancellationToken cancellationToken)
         {
+            int tryCount = 4;
             bool successful = true;
             while ((string.IsNullOrWhiteSpace(this.Cookie) || string.IsNullOrWhiteSpace(this.Crumb) || !successful)
-                && !cancellationToken.IsCancellationRequested)
+                && !cancellationToken.IsCancellationRequested && tryCount > 0)
             {
                 successful = await this.RefreshTokenAsync(symbol);
+                if (successful)
+                {
+                    httpClient.DefaultRequestHeaders.Add(HttpRequestHeader.Cookie.ToString(), this.Cookie);
+                }
+
+                await Task.Delay(1000, cancellationToken);
+                tryCount--;
             }
         }
 
@@ -62,14 +72,15 @@ namespace Hilres.Stock.Download.YahooFinance
         /// Clear token then refresh cookie and crumb value.
         /// </summary>
         /// <param name="symbol">Stock ticker symbol.</param>
+        /// <param name="httpClient">HttpClient.</param>
         /// <param name="cancellationToken">CancellationToken.</param>
         /// <returns>True if successful.</returns>
-        public async Task ClearAndRefreshAsync(string symbol, CancellationToken cancellationToken)
+        public async Task ClearAndRefreshAsync(string symbol, HttpClient httpClient, CancellationToken cancellationToken)
         {
-            this.logger.LogDebug("ClearAndRefreshAsync");
+            this.logger.LogDebug(" = = = = = = ClearAndRefreshAsync = = = = = =");
             this.Cookie = null;
             this.Crumb = null;
-            await this.RefreshAsync(symbol, cancellationToken);
+            await this.RefreshAsync(symbol, httpClient, cancellationToken);
         }
 
         /// <summary>

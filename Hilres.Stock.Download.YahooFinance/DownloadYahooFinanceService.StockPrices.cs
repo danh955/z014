@@ -14,6 +14,7 @@ namespace Hilres.Stock.Download.YahooFinance
     using System.Threading.Tasks;
     using CsvHelper;
     using CsvHelper.Configuration;
+    using CsvHelper.TypeConversion;
     using Hilres.Stock.Download.Abstraction;
     using Microsoft.Extensions.Logging;
 
@@ -28,10 +29,7 @@ namespace Hilres.Stock.Download.YahooFinance
         /// <inheritdoc/>
         public async Task<PriceListResult> GetStockPricesAsync(string symbol, DateTime firstDate, DateTime lastDate, StockInterval interval, CancellationToken cancellationToken)
         {
-            this.count++;
-            this.logger.LogInformation("RequestCount = {0}, Symbol = {1}, ", this.count, symbol);
-
-            await this.token.RefreshAsync(symbol, cancellationToken);
+            await this.token.RefreshAsync(symbol, this.httpClient, cancellationToken);
 
             long epochFirstDate = (long)(firstDate.Date - this.epoch).TotalSeconds;
             long epochLastDate = (long)(lastDate.Date - this.epoch).TotalSeconds;
@@ -50,34 +48,35 @@ namespace Hilres.Stock.Download.YahooFinance
 
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, uri);
-                request.Headers.Add(HttpRequestHeader.Cookie.ToString(), this.token.Cookie);
+                this.count++;
+                this.logger.LogDebug("RequestCount = {0}, Symbol = {1}, ", this.count, symbol);
 
                 bool successful = false;
                 while (!successful && !cancellationToken.IsCancellationRequested)
                 {
-                    var response = await this.httpClient.SendAsync(request, cancellationToken);
+                    var response = await this.httpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+                        using var responseStream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
                         using var streamReader = new StreamReader(responseStream);
                         using var csv = new CsvReader(streamReader, new CsvConfiguration(CultureInfo.InvariantCulture));
 
-                        if (!cancellationToken.IsCancellationRequested && await csv.ReadAsync())
+                        if (!cancellationToken.IsCancellationRequested && await csv.ReadAsync().ConfigureAwait(false))
                         {
                             csv.ReadHeader();
 
-                            while (!cancellationToken.IsCancellationRequested && await csv.ReadAsync())
+                            while (!cancellationToken.IsCancellationRequested && await csv.ReadAsync().ConfigureAwait(false))
                             {
+                                var a = csv[0];
                                 items.Add(new PriceListItem(
                                     Date: csv.GetField<DateTime>(0),
-                                    Open: csv.GetField<double>(1),
-                                    High: csv.GetField<double>(2),
-                                    Low: csv.GetField<double>(3),
-                                    Close: csv.GetField<double>(4),
-                                    AdjClose: csv.GetField<double>(5),
-                                    Volume: csv.GetField<long>(6)));
+                                    Open: csv.GetDouble(1),
+                                    High: csv.GetDouble(2),
+                                    Low: csv.GetDouble(3),
+                                    Close: csv.GetDouble(4),
+                                    AdjClose: csv.GetDouble(5),
+                                    Volume: csv.GetLong(6)));
                             }
                         }
 
@@ -93,13 +92,19 @@ namespace Hilres.Stock.Download.YahooFinance
                             return new PriceListResult(items, errorMessage);
                         }
 
-                        await this.token.ClearAndRefreshAsync(symbol, cancellationToken);
+                        await this.token.ClearAndRefreshAsync(symbol, this.httpClient, cancellationToken);
                         successful = false;
                     }
                 }
             }
             catch (HttpRequestException e)
             {
+                this.logger.LogWarning(e, "HttpRequestException");
+                return new PriceListResult(items, e.Message);
+            }
+            catch (TypeConverterException e)
+            {
+                this.logger.LogWarning(e, "TypeConverterException");
                 return new PriceListResult(items, e.Message);
             }
 
